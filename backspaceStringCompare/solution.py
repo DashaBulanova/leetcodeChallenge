@@ -16,17 +16,10 @@ class Solution:
         return True
 
     def get_next_significant_index(self, origin: str, current_index: int) -> int:
-        if current_index == 0:
-            return -1
+        backspace, i = 0, current_index - 1
 
-        backspace = 0
+        while i >= 0 and (origin[i] == '#' or backspace):
+            backspace += 1 if origin[i] == '#' else -1
+            i -= 1
 
-        for i in range(current_index-1, -1, -1):
-            if origin[i] == '#':
-                backspace += 1
-            elif backspace > 0:
-                backspace -= 1
-            else:
-                return i
-
-        return -1
+        return i
