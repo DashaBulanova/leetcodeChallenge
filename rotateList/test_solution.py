@@ -1,31 +1,42 @@
+from typing import List
+
 import pytest
 
 from rotateList.solution import Solution, ListNode
 
 
-def toLinkedList(input: str) -> ListNode:
+def toLinkedList(input: List) -> ListNode:
     head = None
-    current_node = head
+    current_node = None
 
-    for c in input.split('->'):
+    for i in input:
         if head is None:
-            head = ListNode(c)
+            head = ListNode(i)
             current_node = head
-        elif c == 'NULL':
-            current_node.next = None
-            current_node = current_node.next
         else:
-            current_node.next = ListNode(c)
+            current_node.next = ListNode(i)
             current_node = current_node.next
 
     return head
 
 
+def toList(head: ListNode) -> List:
+    result = []
+    node = head
+    while node is not None:
+        result.append(node.val)
+        node = node.next
+
+    return result
+
+
 @pytest.mark.parametrize("input, k, expected",
                          [
-                             ("1->2->3->4->5->NULL", 2, "4->5->1->2->3->NULL"),
+                             ([0, 1, 2], 4, [2, 0, 1]),
+                             ([1, 2, 3], 2000000000, [2, 3, 1]),
                          ])
 def test_solution(input, k, expected):
     head = toLinkedList(input)
     actual = Solution().rotateRight(head, k)
-    assert str(actual) == expected
+
+    assert toList(actual) == expected

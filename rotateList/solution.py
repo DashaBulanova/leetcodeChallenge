@@ -19,8 +19,14 @@ class ListNode:
 
 class Solution:
     def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if k == 0 or not head:
+            return head
+
         node = head
         prev = None
+
+        count = self.get_count(head)
+        k = k % count
         for i in range(1, k + 1):
             while node.next is not None:
                 curr = node
@@ -32,3 +38,12 @@ class Solution:
                 head = node
 
         return node
+
+    def get_count(self, head):
+        count = 0
+        node = head
+
+        while node is not None:
+            count += 1
+            node = node.next
+        return count
