@@ -17,6 +17,10 @@ class ListNode:
 
 
 class Solution:
+    # idea:
+    # 1. Count the length of the linked list
+    # 2. Determine the length of nodes in each chunk
+    # 3. Splitting the linked list up
     def splitListToParts(self, root: ListNode, k: int) -> List[ListNode]:
         if k == 0:
             return []
@@ -26,25 +30,23 @@ class Solution:
         quotation = length // k
         reminder = length % k
 
+        groups = [quotation + 1] * reminder + [quotation]*(k-reminder)
         result = [] * k
         currentNode = root
 
-        for i in range(0, k):
+        for i, item_count in enumerate(groups):
 
-            item_count = max(1, quotation + min(1, reminder))
-            reminder -= min(1, reminder)
-
-            j = 1
             result.append(currentNode)
-            while j != item_count:
-                j += 1
+
+            for j in range(item_count-1):
                 currentNode = currentNode.next
 
-            if currentNode is None:
-                next = None
-            else:
+            if currentNode:
                 next = currentNode.next
                 currentNode.next = None
+            else:
+                next = None
+
             currentNode = next
 
         return result
