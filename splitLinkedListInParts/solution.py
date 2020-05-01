@@ -28,33 +28,24 @@ class Solution:
 
         result = [] * k
         currentNode = root
-        if quotation > 0:
-            for i in range(0, k):
 
-                if reminder == 0:
-                    item_count = quotation
-                else:
-                    item_count = quotation + 1
-                    reminder -= 1
+        for i in range(0, k):
 
-                j = 1
-                result.append(currentNode)
-                while j != item_count:
-                    j += 1
-                    currentNode = currentNode.next
+            item_count = max(1, quotation + min(1, reminder))
+            reminder -= min(1, reminder)
 
+            j = 1
+            result.append(currentNode)
+            while j != item_count:
+                j += 1
+                currentNode = currentNode.next
+
+            if currentNode is None:
+                next = None
+            else:
                 next = currentNode.next
                 currentNode.next = None
-                currentNode = next
-        else:
-            for i in range(0, reminder):
-                result.append(currentNode)
-                next = currentNode.next
-                currentNode.next = None
-                currentNode = next
-
-            for i in range(0, k-reminder):
-                result.append(None)
+            currentNode = next
 
         return result
 
