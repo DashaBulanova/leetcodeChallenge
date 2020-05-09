@@ -18,7 +18,7 @@ class Solution(object):
         mid = 0
 
         while low != mid != high:
-            mid = int((high - low) // 2) + low
+            mid = low + (high - low) // 2
             pow = mid ** 2
 
             if pow == num:
