@@ -15,16 +15,15 @@ class Solution(object):
     def binarySearch(self, num: int) -> bool:
         low = 1
         high = 46340
-        mid = 0
 
-        while low != mid != high:
+        while low <= high:
             mid = low + (high - low) // 2
-            pow = mid ** 2
 
-            if pow == num:
+            if mid ** 2 == num:
                 return True
+            elif mid ** 2 > num:
+                high = mid - 1
+            else:
+                low = mid + 1
 
-            high = mid - 1 if pow > num else high
-            low = mid + 1 if pow < num else low
-
-        return mid ** 2 == num
+        return False
