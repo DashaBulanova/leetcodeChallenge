@@ -13,12 +13,16 @@ class Solution:
             if mid % 2 == 0:
                 if nums[mid + 1] == nums[mid]:
                     left = mid + 2
-                else:
+                elif nums[mid - 1] == nums[mid]:
                     right = mid - 2
+                else:
+                    return nums[mid]
             else:
                 if nums[mid + 1] == nums[mid]:
                     right = mid - 1
-                else:
+                elif nums[mid - 1] == nums[mid]:
                     left = mid + 1
+                else:
+                    return nums[mid]
 
         return nums[left]
