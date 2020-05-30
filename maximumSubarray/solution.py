@@ -5,7 +5,21 @@ from typing import List
 class Solution(object):
 
     def maxSubArray(self, nums: List[int]) -> int:
-        return self.max_sub_array(0, len(nums)-1, nums)
+        return self.kadane_approach(nums)
+
+    def kadane_approach(self, nums: List[int]) -> int:
+        current_sum, max_sum = 0, None
+
+        for i in nums:
+            current_sum = max(i, current_sum + i)
+            if max_sum is None:
+                max_sum = current_sum
+            max_sum = max(max_sum, current_sum)
+
+        return max_sum
+
+    def divide_and_conquer_approach(self, nums: List[int]) -> int:
+        return self.max_sub_array(0, len(nums) - 1, nums)
 
     # l - левая граница, r - правая граница
     def max_sub_array(self, le: int, r: int, nums: List[int]) -> int:
@@ -13,11 +27,11 @@ class Solution(object):
         if le == r:
             return nums[le]
 
-        q = floor((r - le)/2)
+        q = floor((r - le) / 2)
 
-        left_sum = self.max_sub_array(le, le+q, nums)
-        right_sum = self.max_sub_array(le+q + 1, r, nums)
-        crossing_sum = self.sum_crossing(le, le+q, r, nums)
+        left_sum = self.max_sub_array(le, le + q, nums)
+        right_sum = self.max_sub_array(le + q + 1, r, nums)
+        crossing_sum = self.sum_crossing(le, le + q, r, nums)
 
         return max(left_sum, right_sum, crossing_sum)
 
