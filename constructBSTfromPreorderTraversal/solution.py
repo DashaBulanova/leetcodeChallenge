@@ -45,8 +45,8 @@ class BinarySearchTree:
             result.append(None)
         else:
             result.append(node.val)
-            self.breadth_traversal(node.left, result)
-            self.breadth_traversal(node.right, result)
+            self.breadth_traversal(node._left, result)
+            self.breadth_traversal(node._right, result)
 
 
 

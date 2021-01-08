@@ -11,8 +11,8 @@ def test_case_1():
     assert actual.val == 1
     assert actual.left is None
     assert actual.right.val == 2
-    assert actual.right.right is None
-    assert actual.right.left is None
+    assert actual.right._right is None
+    assert actual.right._left is None
 
 
 def test_case_2():
@@ -27,5 +27,5 @@ def test_case_2():
     assert actual.val == 3
     assert actual.right is None
     assert actual.left.val == 2
-    assert actual.left.left.val == 1
-    assert actual.left.right is None
+    assert actual.left._left.val == 1
+    assert actual.left._right is None

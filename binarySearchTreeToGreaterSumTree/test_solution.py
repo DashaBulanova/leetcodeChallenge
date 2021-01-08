@@ -18,13 +18,13 @@ def test_bst_to_gst():
     assert actual.val == 30
 
     assert actual.left.val == 36
-    assert actual.left.left.val == 36
-    assert actual.left.right.val == 35
-    assert actual.left.right.right.val == 33
+    assert actual.left._left.val == 36
+    assert actual.left._right.val == 35
+    assert actual.left._right._right.val == 33
 
     assert actual.right.val == 21
-    assert actual.right.right.val == 15
-    assert actual.right.right.right.val == 8
-    assert actual.right.right.left is None
-    assert actual.right.left.val == 26
+    assert actual.right._right.val == 15
+    assert actual.right._right._right.val == 8
+    assert actual.right._right._left is None
+    assert actual.right._left.val == 26
 

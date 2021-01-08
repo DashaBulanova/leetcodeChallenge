@@ -7,7 +7,7 @@ def test_to_binary_tree():
     assert actual.val == 1
     assert actual.left.val == 2
     assert actual.right.val == 3
-    assert actual.left.left.val == 4
+    assert actual.left._left.val == 4
 
 
 def test_to_binary_tree_2():
@@ -15,9 +15,9 @@ def test_to_binary_tree_2():
     actual = to_binary_tree(input)
     assert actual.val == 1
     assert actual.left.val == 2
-    assert actual.left.left is None
-    assert actual.left.right.val == 4
+    assert actual.left._left is None
+    assert actual.left._right.val == 4
     assert actual.right.val == 3
-    assert actual.right.left is None
-    assert actual.right.right.val == 5
+    assert actual.right._left is None
+    assert actual.right._right.val == 5
 

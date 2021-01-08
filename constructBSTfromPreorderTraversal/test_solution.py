@@ -14,8 +14,8 @@ def append(node, result):
         result.append(None)
     else:
         result.append(node.val)
-        append(node.left, result)
-        append(node.right, result)
+        append(node._left, result)
+        append(node._right, result)
 
 def test_bst_from_preorder():
     preorder = [8, 5, 1, 7, 10, 12]
