@@ -1,43 +1,68 @@
-def build_max_heap(unordered: []):
-    n = int(len(unordered) / 2) - 1
-
-    for i in range(n, -1, -1):
-        max_heapify(unordered, i)
+__all__ = ['heapify', 'k_largest']
 
 
-def left(index):
-    return 2 * index + 1
+class Heap:
+
+    def __init__(self, A: []):
+        self._A = A
+
+    @property
+    def length(self):
+        return len(self._A)
+
+    @property
+    def heap_size(self):
+        return
 
 
-def right(index):
-    return 2 * index + 2
+def heapify(x: []):
+    """Transform list into a heap, in-place, in O(len(x)) time."""
+    n = len(x)
+
+    for i in reversed(range(n // 2)):
+        _heapify(x, i)
 
 
-def parent(index):
-    return int(index/2)
+def extract_max(x: []):
+    max_element = x.pop(0)
+    heapify(x)
+    return max_element
 
 
-def insert(A: [], key: int):
-    A.append(key)
-    build_max_heap(A)
+# time-complexity O(klgn) => in a worst-case k=n O(nlgn)
+def k_largest(heap: [], k: int) -> int:
+    largest = 0
+    for i in range(0, k):
+        largest = extract_max(heap)
+    return largest
 
 
-def swap(A, i, j):
-    saved = A[i]
-    A[i] = A[j]
-    A[j] = saved
+def insert(x: [], key: int):
+    x.append(key)
+    heapify(x)
 
 
-def max_heapify(A: [], i: int):
-    left_index = left(i)
-    right_index = right(i)
+def _heapify(x: [], pos: int):
+    largest = _get_largest(x, pos)
 
-    largest = i
-    if len(A) > left_index and A[largest] < A[left_index]:
-        largest = left_index
-    elif len(A) > right_index and A[largest] < A[right_index]:
-        largest = right_index
+    if largest != pos:
+        _swap(x, pos, largest)
+        _heapify(x, largest)
 
-    if largest != i:
-        swap(A, i, largest)
-        max_heapify(A, largest)
+
+def _swap(x: [], i: int, j: int):
+    saved = x[i]
+    x[i] = x[j]
+    x[j] = saved
+
+
+def _get_largest(x: [], parent: int):
+    left = 2 * parent + 1
+    right = 2 * parent + 2
+    largest = parent
+    if len(x) > left and x[parent] < x[left]:
+        largest = left
+    if len(x) > right and x[largest] < x[right]:
+        largest = right
+
+    return largest

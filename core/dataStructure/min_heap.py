@@ -1,4 +1,4 @@
-__all__ = ['heapify', 'push', 'pop']
+__all__ = ['heapify', 'k_smallest', 'extract_min', 'insert']
 
 
 def heapify(x: []):
@@ -9,13 +9,21 @@ def heapify(x: []):
         _heapify(x, i)
 
 
-def pop(x: []):
+# time-complexity O(klgn) => in a worst-case k=n O(nlgn)
+def k_smallest(heap: [], k: int) -> int:
+    smallest = 0
+    for i in range(0, k):
+        smallest = extract_min(heap)
+    return smallest
+
+
+def extract_min(x: []):
     min_element = x.pop(0)
     heapify(x)
     return min_element
 
 
-def push(x: [], key: int):
+def insert(x: [], key: int):
     x.append(key)
     heapify(x)
 
@@ -40,66 +48,10 @@ def _get_smallest(x: [], parent: int):
     smallest = parent
     if len(x) > left and x[parent] > x[left]:
         smallest = left
-    elif len(x) > right and x[smallest] > x[right]:
+    if len(x) > right and x[smallest] > x[right]:
         smallest = right
 
     return smallest
-
-
-class MinHeap:
-    _heap = []
-
-    def pop(self):
-        min_element = self._heap.pop(0)
-        heapify(self._heap)
-        return min_element
-
-
-
-    def _heap_size(self):
-        return len(self._heap)
-
-    def _swap(self, i, j):
-        saved = self._heap[i]
-        self._heap[i] = self._heap[j]
-        self._heap[j] = saved
-
-    @staticmethod
-    def _left(index: int):
-        return 2 * index + 1
-
-    @staticmethod
-    def _right(index):
-        return 2 * index + 2
-
-    @staticmethod
-    def _parent(index):
-        return int(index/2)
-
-    def _push_down(self, pos: int):
-        smallest = self._get_smallest(pos)
-
-        if smallest != pos:
-            self._swap(pos, smallest)
-            self._push_down(smallest)
-
-    def _get_smallest(self, parent: int):
-        left = self._left(parent)
-        right = self._right(parent)
-        smallest = parent
-        if self._heap_size() > left and self._heap[parent] > self._heap[left]:
-            smallest = left
-        elif self._heap_size() > right and self._heap[smallest] > self._heap[right]:
-            smallest = right
-
-        return smallest
-
-    def _heapify(self):
-        """Transform list into a heap, in-place, in O(len(x)) time."""
-        n = self._heap_size()
-
-        for i in reversed(range(n // 2)):
-            self._push_down(i)
 
 
 
