@@ -1,3 +1,4 @@
+
 class TreeNode(object):
     def __init__(self, x):
         self.val = x
@@ -6,6 +7,28 @@ class TreeNode(object):
 
     def __str__(self) -> str:
         return str(_in_order_traversal_iter(self))
+
+
+def to_bst(input:[]) -> TreeNode:
+    r = []
+    root = TreeNode(input.pop(0))
+    r.append(root)
+
+    while len(input) > 0:
+        current = r.pop(0)
+        item = input.pop(0)
+        if item is not None:
+            current.left = TreeNode(item)
+            r.append(current.left)
+        if len(input) > 0:
+            item = input.pop(0)
+            if item is not None:
+                current.right = TreeNode(item)
+                r.append(current.right)
+        else:
+            break
+
+    return root
 
 
 def _in_order_traversal_iter(node: TreeNode) -> []:
