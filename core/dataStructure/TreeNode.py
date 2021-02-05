@@ -31,6 +31,11 @@ def to_bst(input:[]) -> TreeNode:
     return root
 
 
+def to_array(root: TreeNode) -> []:
+    result = []
+    return _in_order_traversal(root, result)
+
+
 def _in_order_traversal_iter(node: TreeNode) -> []:
     current = node
     stack = []
