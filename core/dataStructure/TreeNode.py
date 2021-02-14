@@ -9,7 +9,7 @@ class TreeNode(object):
         return str(_in_order_traversal_iter(self))
 
 
-def to_bst(input:[]) -> TreeNode:
+def to_bst(input: []) -> TreeNode:
     r = []
     root = TreeNode(input.pop(0))
     r.append(root)
