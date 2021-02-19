@@ -1,5 +1,7 @@
+from queue import Queue
 
-class TreeNode(object):
+
+class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
@@ -32,8 +34,32 @@ def to_bst(input: []) -> TreeNode:
 
 
 def to_array(root: TreeNode) -> []:
+    return breadth_first_traversal(root)
+
+
+def breadth_first_traversal(root: TreeNode) -> []:
     result = []
-    return _in_order_traversal(root, result)
+    queue = Queue()
+    queue.put(root)
+    count = 1
+    while not queue.empty() and count > 0:
+        node = queue.get()
+        if node is None:
+            result.append(None)
+        else:
+            result.append(node.val)
+            count -= 1
+            if node.left is not None:
+                queue.put(node.left)
+                count += 1
+            else:
+                queue.put(None)
+            if node.right is not None:
+                queue.put(node.right)
+                count += 1
+            else:
+                queue.put(None)
+    return result
 
 
 def _in_order_traversal_iter(node: TreeNode) -> []:
