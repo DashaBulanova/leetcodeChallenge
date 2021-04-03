@@ -8,39 +8,60 @@
 from core.dataStructure.TreeNode import TreeNode
 
 
-#       43
-#
-#   4           6
-#2      4   4       4
-class AVLTree:
+class BSTNode(TreeNode):
+    def __init__(self, parent=None, val=0):
+        super(BSTNode, self).__init__(val)
+        self.parent = parent
+        self.height = 0
+
+    def insert(self):
+
+
+class BST:
     root: TreeNode = None
+
+    def insert(self, val) -> TreeNode:
+        if self.root is None:
+            self.root = BSTNode(None, val)
+            return self.root
+        else:
+            return self._insert(val, self.root)
+
+    def _insert(self, val, current: TreeNode) -> TreeNode:
+        if current is None:
+            raise ValueError()
+
+        if val > current.val:
+            if current.right is None:
+                node = BSTNode(current, val)
+                current.right = node
+                return node
+            else:
+                return self._insert(val, current.right)
+        else:
+            if current.left is None:
+                node = BSTNode(current, val)
+                current.left = node
+                return node
+            else:
+                return self._insert(val, current.left)
+
+
+class AVLTree(BST):
     height: int = 0
 
     def find(self):
         pass
 
     def insert(self, val):
-        if self.root is None:
-            self.root = TreeNode(val)
-        else:
-            self.__insert(val, self.root)
+        node = super(AVLTree, self).insert(val)
+        self.rebalance(node)
 
-    def __insert(self, val, node: TreeNode):
-        if val <= node.val:
-            if node.left is None:
-                node.left = TreeNode(val)
-            else:
-                self.__insert(val, node.left)
-        else:
-            if node.right is None:
-                node.right = TreeNode(val)
-            else:
-                self.__insert(val, node.right)
+    def rebalance(self, node):
+        pass
 
     def delete(self):
         pass
 
     # def __str__(self):
     #     #in-order traversal
-
-
