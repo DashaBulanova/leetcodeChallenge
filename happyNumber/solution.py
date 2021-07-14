@@ -1,16 +1,24 @@
-from typing import List
+import sys
+
+class Solution(object):
+
+    def __init__(self):
+        self.recursion_limit = sys.getrecursionlimit()
+        self.recursion_count = 0
+
+    def isHappy(self, n: int) -> bool:
+
+        self.recursion_count += 1
+        if self.recursion_count >= 958:
+            return False
+
+        sum = 0
+        for d in str(n):
+            d1 = int(d)
+            sum += d1 * d1
 
 
-class Solution:
-    #divide and conque approach O(log(n))
-    def findPeakElement(self, nums: List[int]) -> int:
-        return self.find_peak(nums, 0, len(nums))
-
-    def find_peak(self, nums: List[int], start, end) -> int:
-        mid = start + int((end - start) / 2)
-        if nums[mid] < nums[mid - 1]:
-            return self.find_peak(nums, start, mid - 1)
-        elif len(nums) > mid+1 and nums[mid] < nums[mid+1]:
-            return self.find_peak(nums, mid+1, end)
+        if sum == 1:
+            return True
         else:
-            return mid
+            return self.isHappy(sum)

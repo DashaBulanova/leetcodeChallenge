@@ -1,25 +1,15 @@
-import sys
+from typing import List
 
 
-class Solution(object):
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        return self.findPeak(nums, 0, len(nums)-1)
 
-    def __init__(self):
-        self.recursion_limit = sys.getrecursionlimit()
-        self.recursion_count = 0
-
-    def isHappy(self, n: int) -> bool:
-
-        self.recursion_count += 1
-        if self.recursion_count >= 958:
-            return False
-
-        sum = 0
-        for d in str(n):
-            d1 = int(d)
-            sum += d1 * d1
-
-
-        if sum == 1:
-            return True
+    def findPeak(self, nums: List[int], start: int, end: int):
+        mid = start + int((end - start)/2)
+        if (mid + 1 <= len(nums) - 1) and nums[mid] < nums[mid + 1]:
+            return self.findPeak(nums, mid + 1, end)
+        elif mid - 1 >= 0 and nums[mid] < nums[mid - 1]:
+            return self.findPeak(nums, start, mid - 1)
         else:
-            return self.isHappy(sum)
+            return nums[mid]
