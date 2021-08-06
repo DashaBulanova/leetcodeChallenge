@@ -6,7 +6,6 @@ class Node:
         self.children = children
 """
 from collections import deque
-from queue import Queue
 from typing import List
 
 from core.dataStructure.naryTree import Node
