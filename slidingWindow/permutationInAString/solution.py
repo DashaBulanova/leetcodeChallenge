@@ -1,5 +1,3 @@
-import itertools
-
 """
 oidbcaf
 abc
@@ -22,6 +20,7 @@ window4:caf
 
 """
 
+
 class Solution:
     def find_permutation(self, str, pattern):
         map = dict()
@@ -32,22 +31,20 @@ class Solution:
                 map[p] = 1
 
         window_start = 0
+        matched = 0
 
-        temp = map.copy()  #don't like clone
-        need_clone = False
+        for window_end in range(len(str)):
+            if str[window_end] in map:
+                map[str[window_end]] -= 1
+                matched += 1
 
-        while window_start < len(str):
-            if str[window_start] in temp:
-                temp[str[window_start]] -= 1
-                if temp[str[window_start]] == 0:
-                    temp.pop(str[window_start])
-                need_clone = True
-            else:
-                if need_clone:
-                    temp = map.copy()
-                    need_clone = False
-            if len(temp) == 0:
+            if matched == len(pattern):
                 return True
-            window_start += 1
+
+            if window_end-window_start+1 >= len(pattern):
+                if str[window_start] in map:
+                    map[str[window_start]] += 1
+                    matched -= 1
+                window_start += 1
 
         return False
