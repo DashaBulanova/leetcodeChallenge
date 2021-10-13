@@ -1,28 +1,20 @@
 def find_subarrays(arr, target):
     start = 0
-    result = []
     acc = 1
+    result = []
 
     for end in range(len(arr)):
-        acc = acc * arr[end]
         if arr[end] < target:
-            result.append([arr[end]])
-        if acc < target:
-            if start != end:
-                result.append(arr[start:end+1])
-        else:
+            acc *= arr[end]
             while acc >= target:
-                acc = acc / arr[start]
+                acc /= arr[start]
                 start += 1
 
-            if start != end:
-                result.append(arr[start:end + 1])
-
-    start += 1
-    while start < len(arr)-1:
-        acc = acc / arr[start]
-        result.append(arr[start:len(arr)])
-        start += 1
+            for i in range(start, end+1):
+                result.append(arr[i:end+1])
+        else:
+            start = end + 1
+            acc = 1
 
     return result
 
