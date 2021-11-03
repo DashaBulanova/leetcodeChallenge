@@ -1,4 +1,12 @@
+import math
 from typing import List
+
+
+def right_rotate(nums):
+    last_element = nums[len(nums) - 1]
+    for i in range(len(nums) - 1, 0, -1):
+        nums[i] = nums[i - 1]
+    nums[0] = last_element
 
 
 class Solution:
@@ -6,16 +14,9 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        from_index = len(nums) - k
-        additional = [0] * k
-        j = 0
+        if len(nums)%k == 0:
+            for i in range(k, -1, -1):
+                index_from = len(nums) - i
+                  #  index_to=shift_index
+                item = nums[shift_index]
 
-        for i in range(from_index, len(nums)):
-            additional[j] = nums[i]
-            j += 1
-
-        for i in range(from_index - 1, -1, -1):
-            nums[i + k] = nums[i]
-
-        for i in range(len(additional)):
-            nums[i] = additional[i]
