@@ -7,7 +7,10 @@ class TreeNode:
 
 def has_path(root, sum):
     if root is None:
-        return sum == 0
+        return False
+
+    if sum - root.val == 0 and root.left is None and root.rigth is None:
+        return True
 
     return has_path(root.left, sum - root.val) or has_path(root.right, sum - root.val)
 #time compexity: O(N), N - nodes counts
