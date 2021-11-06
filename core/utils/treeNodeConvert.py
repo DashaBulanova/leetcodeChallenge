@@ -16,8 +16,8 @@ def to_binary_tree(array: List[int]) -> TreeNode:
         elif curr is None:
             curr = queue.get()
             if item is not None:
-                curr._left = TreeNode(item)
-                queue.put(curr._left)
+                curr.left = TreeNode(item)
+                queue.put(curr.left)
         else:
             if item is not None:
                 curr.right = TreeNode(item)
