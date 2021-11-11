@@ -1,29 +1,50 @@
-class Node:
-    def __init__(self, value, next=None):
-        self.value = value
-        self.next = next
-
-    def print_list(self):
-        temp = self
-        while temp is not None:
-            print(temp.value, end='')
-            temp = temp.next
-        print()
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 
-def find_cycle_start(head: Node):
-    setattr(Node, "parent", lambda self, other: self.val <= other.val)
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        slow_pointer = head
+        fast_pointer = head
+        has_cycle = False
 
-    slow_pointer = head
-    fast_pointer = head
+        # define is cycle exist
+        while fast_pointer and fast_pointer.next and fast_pointer.next.next:
+            slow_pointer = slow_pointer.next
+            fast_pointer = fast_pointer.next.next
 
-    while fast_pointer is not None and fast_pointer.next:
-        slow_prev = slow_pointer
-        slow_pointer = slow_pointer.next
-        fast_prev = fast_pointer.next
-        fast_pointer = fast_pointer.next.next
+            if slow_pointer == fast_pointer:
+                has_cycle = True
+                break
 
-        if slow_pointer == fast_pointer and slow_prev != fast_prev:
-            return slow_pointer
+        if not has_cycle:
+            return None
 
-    return head
+        # define lenght of the cycle
+        lenght = 0
+        lenght_defined = False
+        while not lenght_defined:
+            fast_pointer = fast_pointer.next
+            lenght += 1
+            if fast_pointer == slow_pointer:
+                lenght_defined = True
+
+        # define start point
+        start_pointer = head
+        fast_pointer = head
+        i = 0
+
+        start_defined = False
+        while not start_defined:
+            fast_pointer = fast_pointer.next
+            i += 1
+            if i > lenght:
+                start_pointer = start_pointer.next
+            if fast_pointer == start_pointer:
+                break
+
+        return start_pointer
+#time complexity O(3N)
+#space complexity: O(1)
