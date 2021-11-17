@@ -4,45 +4,39 @@ class Node:
         self.next = next
 
 
-def reverse(start_node, end_node):
-    if start_node == end_node:
-        return
-
+def reverse(start_node):
     prev = None
     current = start_node
-    while prev != end_node:
+    while current:
         next = current.next
         current.next = prev
         prev = current
         current = next
+    return prev
 
 
 def is_palindromic_linked_list(head):
-    if not head:
-        return False
-    if not head.next:
+    if not head and not head.next:
         return True
-    slow_pointer = head
-    fast_pointer = head
 
-    most_right = head
-    while fast_pointer and fast_pointer.next:
-        most_right = fast_pointer.next
-        fast_pointer = fast_pointer.next.next
-        if fast_pointer:
-            most_right = fast_pointer
-        slow_pointer = slow_pointer.next
+    result = True
+    slow, fast = head, head
 
-    middle_pointer = slow_pointer
-    reverse(middle_pointer, most_right)
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
 
-    right_pointer = most_right
-    left_pointer = head
-    while left_pointer != right_pointer and left_pointer and right_pointer:
-        if left_pointer.value != right_pointer.value:
-            return False
-        left_pointer = left_pointer.next
-        right_pointer = right_pointer.next
+    middle_pointer = slow
+    most_right = reverse(middle_pointer)
 
-    reverse(most_right, middle_pointer)
-    return True
+    right = most_right
+    left = head
+    while left != right and left and right:
+        if left.value != right.value:
+            result = False
+            break
+        left = left.next
+        right = right.next
+
+    reverse(most_right)
+    return result
