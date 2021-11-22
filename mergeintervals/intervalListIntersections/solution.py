@@ -51,35 +51,27 @@ first = 1
 """
 class Solution:
     def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
-        intersection = []
+        result = []
 
-        first = 0
-        second = 0
-        while first < len(firstList) and second < len(secondList):
-            a = firstList[first]
-            b = secondList[second]
+        index_a = 0
+        index_b = 0
 
-            if b[1] < a[0]:#4
-                second += 1
-            elif a[1] < b[0]:#5
-                first +=1
-            elif b[0] <= a[0] <= a[1] <= b[1]:#6
-                intersection.append([a[0], a[1]])
-                first +=1
-            elif a[0] <= b[0] <= b[1] <= a[1]:#1
-                intersection.append([b[0],b[1]])
-                second += 1
-            elif a[0] <= b[0] <= a[1] <= b[1]:#2
-                intersection.append([b[0], a[1]])
-                first +=1
-            elif b[0] <= a[0] <= b[1] <= a[1]:#3
-                intersection.append([a[0], b[1]])
-                second += 1
+        while index_a < len(firstList) and index_b < len(secondList):
+            # do not have overlapping
+            a = firstList[index_a]
+            b = secondList[index_b]
+            # do not have overlapping
+            if a[1] < b[0]:
+                index_a += 1
+            elif b[1] < a[0]:
+                index_b += 1
             else:
-                raise ValueError()
+                # has overlapping
+                result.append([max(b[0], a[0]), min(b[1], a[1])])
+                index_a += int(b[1] >= a[1])
+                index_b += int(b[1] < a[1])
 
-        return intersection
-
+        return result
 
 
 
