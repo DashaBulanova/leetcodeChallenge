@@ -72,54 +72,22 @@ class Solution:
     def insert(self,
                intervals: List[List[int]],
                newInterval: List[int]) -> List[List[int]]:
-        result = []
-
         if len(intervals) == 0:
-            result.append(newInterval)
-            return result
+            return [newInterval]
 
-        b = newInterval
-
-        if b[0] > intervals[-1][1]:
-            result.extend(intervals)
-            result.append(newInterval)
-            return result
-
-        appended = False
+        result = []
         i = 0
-        for a in intervals:
-            if a[1] < b[0]:
-                result.append(a)
-            elif b[1] < a[0]:
-                if not appended:
-                    result.append(newInterval)
-                result.append(a)
-                break
-            elif b[0] <= a[0] <= a[1] <= b[1]:
-                if not appended:
-                    result.append([b[0], b[1]])
-                    appended = True
-                else:
-                    result[-1][1] = b[1]
-            elif b[0] <= a[0] <= b[1] <= a[1]:
-                if not appended:
-                    result.append([b[0], a[1]])
-                    appended = True
-                else:
-                    result[-1][1] = a[1]
-            elif a[0] <= b[0] <= b[1] <= a[1]:
-                result.append(a)
-                break
-            elif a[0] <= b[0] <= a[1] <= b[1]:
-                if not appended:
-                    result.append([a[0], b[1]])
-                    appended = True
-                else:
-                    result[-1][1] = b[1]
-            else:
-                continue
-
+        # skip all intervals before newInterval start
+        while i < len(intervals) and intervals[i][1] < newInterval[0]:
+            result.append(intervals[i])
             i += 1
 
-        result.extend(intervals[i+1:len(intervals)])
+        merged_interval = newInterval
+        while i < len(intervals) and intervals[i][0] <= newInterval[1]:
+            merged_interval[0] = min(intervals[i][0], merged_interval[0])
+            merged_interval[1] = max(intervals[i][1], merged_interval[1])
+            i += 1
+
+        result.append(merged_interval)
+        result.extend(intervals[i:len(intervals)])
         return result
