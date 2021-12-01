@@ -67,3 +67,4 @@ def test_number_of_bits(input, expected):
     root = to_binary_tree(input)
     actual = Solution().connect(root)
     assert to_array(actual) == expected
+
