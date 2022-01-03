@@ -1,30 +1,14 @@
 from typing import List
 
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        he_trust = {i:0 for i in range(1, n+1)} # O(n)
+        him_trust = {i:0 for i in range(1, n+1)} # O(n)
+        for t in trust: #O(m)
+            him_trust[t[1]]+=1
+            he_trust[t[0]] +=1
 
-class Solution(object):
-
-    def findJudge(self, N: int, trust: List[List[int]]) -> int:
-
-        if N == 1 and len(trust) == 0:
-            return 1
-        if N == 2 and len(trust) == 1:
-            return trust[0][1]
-        judges_candidates = set()
-        people = set()
-
-        for connection in trust:
-            a = connection[0]
-            b = connection[1]
-
-            judges_candidates.add(b)
-            people.add(a)
-
-        diff = judges_candidates.difference(people)
-
-        if len(diff) == 1 and len(people) == N-1:
-            if len(trust) == N-1 and len(judges_candidates) >= N-1:
-                return -1
-            else:
-                return diff.pop()
-        else:
-            return -1
+        for i in range(1, n+1):
+            if he_trust[i]==0 and him_trust[i]==n-1:
+                return i
+        return -1 #total complexity: 
