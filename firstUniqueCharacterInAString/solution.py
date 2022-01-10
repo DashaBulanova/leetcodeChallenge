@@ -1,20 +1,11 @@
-import string
-from typing import List
-
 
 class Solution:
     def firstUniqChar(self, s: str) -> int:
+        hashmap = {}
+        for c in s:
+            hashmap[c] = hashmap[c] + 1 if c in hashmap else 1
 
-        chars = dict()
-        for i in range(0, len(s)):
-            c = s[i]
-            if s[i] not in chars:
-                chars[c] = []
-
-            chars[c].append(i)
-
-        for key, value in chars.items():
-            if len(value) == 1:
-                return int(value[0])
-
+        for i in range(len(s)):
+            if hashmap[s[i]] == 1:
+                return i
         return -1
