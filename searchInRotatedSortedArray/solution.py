@@ -5,25 +5,21 @@ class Solution:
         if not nums:
             return -1
 
-        def binarySearch(s,e)->int:
-            if s==e:
-                return s if nums[s] == target else -1
-
-            #[4,5,6,7,0,1,2]
-            #
+        s,e=0, len(nums)-1
+        while s<e:
             mid=s+(e-s)//2
             if nums[mid]==target:
                 return mid
 
             if nums[s]<=nums[mid]:
                 if nums[s]<=target<nums[mid]:
-                    return binarySearch(s, mid)
+                    e=mid
                 else:
-                    return binarySearch(mid+1, e)
+                    s=mid+1
             else:
                 if nums[mid]<target<=nums[e]:
-                    return binarySearch(mid+1, e)
+                    s=mid+1
                 else:
-                    return binarySearch(s, mid)
+                    e=mid
 
-        return binarySearch(0, len(nums)-1)
+        return s if nums[s] == target else -1
