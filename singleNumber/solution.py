@@ -1,14 +1,7 @@
 from typing import List
-
-
-class Solution(object):
+class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        result = 0
-        for i in nums:
-            result = result ^ i
-
-        return result
+        acc = 0
+        for n in nums:
+            acc ^= n
+        return acc
