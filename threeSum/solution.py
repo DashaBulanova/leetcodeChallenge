@@ -1,42 +1,37 @@
-import math
 from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()  # O(n log n)
-        result = []
-
-        hashmap = {}
-
+        #a+b+c=0 => a+b=-c
+        #1. brute force => O(n^3)
+        #2. O(n^2) two pointer + hashmap
+        #3. sort O(nlogn) + two pointer + hashmap
+        nums.sort()
+        values = {}
         for i in range(len(nums)):
-            if nums[i] in hashmap:
-                hashmap[nums[i]].append(i)
+            if nums[i] in values:
+                values[nums[i]].append(i)
             else:
-                hashmap[nums[i]] = [i]
+                values[nums[i]] = [i]
 
-        def twoSum(start: int, target) -> List[List[int]]:
+        def twosum(s):
             res = []
-            prev = None
-            for i in range(start + 1, len(nums)):
-                if prev is not None and nums[i] == prev:
+            for i in range(s+1, len(nums)):
+                if i>s+1 and nums[i]==nums[i-1]:
                     continue
-
-                if target - nums[i] in hashmap:
-                    for j in hashmap[target - nums[i]]:
-                        if i < j:
-                            res.append([nums[start], nums[i], nums[j]])
+                if -(nums[s]+nums[i]) in values:
+                    for j in values[-(nums[s]+nums[i])]:
+                        if j>i:
+                            res.append([nums[s],nums[i],nums[j]])
                             break
-                prev = nums[i]
-
             return res
 
-        prev = None
-        for i in range(len(nums)):  # 0(n)
-            if prev is not None and nums[i] == prev:
+        result = []
+        for i in range(len(nums)):
+            if i>0 and nums[i]==nums[i-1]:
                 continue
-            else:
-                res = twoSum(i, -nums[i])
-                result.extend(res)
-            prev = nums[i]
 
+            res = twosum(i)
+            if res:
+                result.extend(res)
         return result
