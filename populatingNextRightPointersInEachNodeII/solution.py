@@ -12,4 +12,21 @@ class Node:
 
 class Solution:
     def connect(self, root: Node) -> Node:
-g
+        if not root:
+            return None
+
+        q = deque([root, None])
+
+        while q:
+            curr = q.popleft()
+            while curr:
+                next = q.popleft()
+                curr.next = next
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+                curr = next
+            if q:
+                q.append(None)
+        return root
