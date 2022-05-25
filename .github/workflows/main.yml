@@ -30,8 +30,6 @@ jobs:
       - name: Get tag
         id: tag
         uses: dawidd6/action-get-tag@v1
-
-      - name: Use tag
         run: echo ${{steps.tag.outputs.tag}}
 
       # Runs a set of commands using the runners shell
