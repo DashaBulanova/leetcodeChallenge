@@ -23,15 +23,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       - uses: actions-ecosystem/action-get-latest-tag@v1
         id: get-latest-tag
-        if: ${{ steps.release-label.outputs.level != null }}
-        with:
-          semver_only: true
 
       - name: Use tag
         run: echo ${{ steps.get-latest-tag.outputs.tag }}
