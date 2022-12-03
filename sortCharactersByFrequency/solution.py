@@ -1,19 +1,9 @@
-import string
-from typing import List
-
-
 class Solution:
-    def frequencySort(self, s: str) -> str:
-
-        chars = dict()
-        for i in range(0, len(s)):
-            c = s[i]
-            if c not in chars:
-                chars[c] = 0
-            chars[c] += 1
-
-        result = ""
-        for key, value in reversed(sorted(chars.items(), key=lambda x: x[1])):
-            result += value * key
-
-        return result
+	def frequencySort(self, s: str) -> str:
+		fr = {}
+		for c in s:
+			fr[c]=fr.get(c, 0) + 1
+		res = ''
+		for k,v in sorted(fr.items(), key=lambda x: x[1], reverse=True):
+			res += ''.join([k]*v)
+		return res
