@@ -1,26 +1,31 @@
 from random import randrange
 
-
 class RandomizedSet:
 
     def __init__(self):
-        self.k = set()
+        self.k = dict()
+        self.r = list()
 
     def insert(self, val: int) -> bool:
         if val in self.k:
             return False
-        self.k.add(val)
+        self.r.append(val)
+        self.k[val] = len(self.r)-1
         return True
 
     def remove(self, val: int) -> bool:
         if val in self.k:
-            self.k.remove(val)
+            j = self.k[val]
+            self.r[j] = self.r[-1]
+            self.k[self.r[j]] = j
+            self.k.pop(val)
+            del self.r[-1]
             return True
         return False
 
     def getRandom(self) -> int:
-        r = randrange(len(self.k))
-        return list(self.k)[r]
+        return self.r[randrange(len(self.r))]
+
 
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()

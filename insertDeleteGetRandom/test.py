@@ -4,9 +4,9 @@ from .solution import RandomizedSet
 
 def test():
     rs = RandomizedSet()
-    print(rs.insert(0))
-    print(rs.insert(1))
-    print(rs.remove(0))
-    print(rs.insert(2))
-    print(rs.remove(1))
+    print(rs.insert(53))
+    print(rs.insert(12))
+    print(rs.remove(53))
+    print(rs.insert(23))
+    print(rs.remove(12))
     print(rs.getRandom())
