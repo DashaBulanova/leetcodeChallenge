@@ -10,16 +10,12 @@ P(k)=max(P(k-2)+nums[k], P(k-1))
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        memo = [0]*len(nums)
         result = 0
+        prev, prev_prev = 0, 0
         for i in range(len(nums)):
-            if i == 0:
-                memo[0] = nums[0]
-                result =  memo[0]
-            elif i == 1:
-                memo[1] = max(nums[0], nums[1])
-                result = max(memo[1], memo[0])
-            else:
-                memo[i] = max(memo[i-2]+nums[i], memo[i-1])
-                result = max(result, memo[i])
+            cur = max(prev_prev + nums[i], prev)
+            result = max(result, cur)
+            prev_prev = prev
+            prev = result
+
         return result
