@@ -1,10 +1,12 @@
 class Solution:
     def detectCapitalUse(self, word: str) -> bool:
-        if all([x.isupper() for x in word]):
+        capitals = sum([x.isupper() for x in word])
+        print(capitals)
+        if capitals == len(word):
             return True
-        if all([x.islower() for x in word]):
+        if capitals == 0:
             return True
-        if word[0].isupper() and all([word[x].islower() for x in range(1, len(word))]):
+        if capitals == 1 and word[0].isupper():
             return True
 
         return False
