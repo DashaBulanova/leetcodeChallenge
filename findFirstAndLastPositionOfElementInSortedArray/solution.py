@@ -1,32 +1,35 @@
-from typing import List
-
 class Solution:
-    def searchRange(self, nums: List[int], target: int) -> List[int]:
-        if not nums:
-            return [-1,-1]
+    def searchRange(self, nums: list[int], target: int) -> list[int]:
+        if len(nums) == 0:
+            return [-1, -1]
+        return self.__searchRange(0, len(nums)-1, nums, target)
 
-        def searchRange(s,e)-> List[int]:
-            if s==e:
-                return [s,s] if nums[s] == target else [-1,-1]
+    def __searchRange(self, s, e, nums: list[int], target: int) -> list[int]:
+        if s == e:
+            return [s, s] if nums[s] == target else [-1, -1]
 
-            mid = s + (e-s)//2
-            mid_item = nums[mid]
+        m = s + (e-s) // 2
+        if target < nums[m]:
+            return self.__searchRange(s, m, nums, target)
 
-            if mid_item > target:
-                return searchRange(s, mid)
-            elif mid_item < target:
-                return searchRange(mid+1, e)
-            else:
-                left=searchRange(s, mid)
-                right=searchRange(mid+1, e)
+        if target > nums[m]:
+            return self.__searchRange(m+1, e, nums, target)
 
-                if left == [-1,-1]:
-                    return right
-                if right == [-1, -1]:
-                    return left
+        l = self.__searchRange(s, m, nums, target)
+        r = self.__searchRange(m+1, e, nums, target)
 
-                return [left[0], right[1]]
-
-        return searchRange(0, len(nums)-1)
+        return [r[0] if l[0] == -1 else l[0], max(l[1], r[1])]
 
 
+"""
+[5, 7, 7, 8, 8, 10] t=8
+s=0,e=5
+m=0+5//2=2
+nums[2]==7
+
+s=3, e=5
+m=5-3=2//2=1+3=4
+l=search(3,4)=>
+    m=3+
+r=search(4,4)=>[4,4]
+"""
