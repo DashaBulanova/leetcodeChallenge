@@ -8,7 +8,7 @@ class Solution:
             result += 1 if coins >= 0 else 0
 
             if coins <= 0:
-                return result
+                break
 
         return result
 
