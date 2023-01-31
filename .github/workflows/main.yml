@@ -41,6 +41,6 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
-          approvers: S4RPYK3IVl5
+          approvers: DashaBulanova
           minimum-approvals: 1
           exclude-workflow-initiator-as-approver: false
