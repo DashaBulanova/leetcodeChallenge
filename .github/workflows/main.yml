@@ -40,7 +40,6 @@ jobs:
       - name: Wait for approval
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ env.GITHUB_TOKEN }}
           approvers: S4RPYK3IVl5
           minimum-approvals: 1
           exclude-workflow-initiator-as-approver: false
