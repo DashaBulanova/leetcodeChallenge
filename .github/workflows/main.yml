@@ -36,12 +36,3 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-
-
-      - name: Wait for approval
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: DashaBulanova
-          minimum-approvals: 1
-          exclude-workflow-initiator-as-approver: false
