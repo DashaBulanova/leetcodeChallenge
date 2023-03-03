@@ -10,14 +10,17 @@ class Solution:
                 e+=1
         
         return -1
+#k=len(needle)
+#n=len(heystack)
+#O(nk)
 
 
 
 """
 s index always shows matched first index of needle s
     sadbutsad sad 
-s   |         |
-e   |
+     |         |
+       |
 
     sadbutsad sad 
 s   |          |
