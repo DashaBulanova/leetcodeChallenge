@@ -1,42 +1,43 @@
-class Node:
-    def __init__(self, value, next=None):
-        self.value = value
+from typing import Optional
+from collections import deque
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
         self.next = next
 
 
-def reverse(start_node):
-    prev = None
-    current = start_node
-    while current:
-        next = current.next
-        current.next = prev
-        prev = current
-        current = next
-    return prev
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+        stack = deque()
 
+        while True:
+            slow = slow.next
+            if fast.next and fast.next.next:
+                fast = fast.next.next
+            else:
+                break
 
-def is_palindromic_linked_list(head):
-    if not head and not head.next:
+        while slow:
+            stack.append(slow.val)
+            slow = slow.next
+
+        slow = head
+        while len(stack):
+            node = stack.pop()
+            if slow.val == node:
+                slow = slow.next
+            else:
+                return False
+
         return True
 
-    result = True
-    slow, fast = head, head
 
-    while fast and fast.next:
-        fast = fast.next.next
-        slow = slow.next
-
-    middle_pointer = slow
-    most_right = reverse(middle_pointer)
-
-    right = most_right
-    left = head
-    while left != right and left and right:
-        if left.value != right.value:
-            result = False
-            break
-        left = left.next
-        right = right.next
-
-    reverse(most_right)
-    return result
+"""
+7, 3, 3, 3, 3 7
+         |
+              |
+"""
