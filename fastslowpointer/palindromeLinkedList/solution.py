@@ -1,5 +1,5 @@
 from typing import Optional
-from collections import deque
+
 
 # Definition for singly-linked list.
 class ListNode:
@@ -8,11 +8,43 @@ class ListNode:
         self.next = next
 
 
+def reverse(head) -> ListNode:
+    if not head or not head.next:
+        return head
+
+    prev = None
+    current = head
+
+    next = current.next
+    while current:
+        current.next = prev
+        prev = current
+        current = next
+        if current:
+            next = current.next
+
+    return prev
+
+
+""""
+     None <- 0 <-6<-5 <- 8   None
+prev                     |
+cur                            |
+next                           | 
+
+current = 0 -> 6 -> 5 -> 8
+x = 5 -> 8
+c = 6 -> 5 -> 8
+c = 6
+
+0 -> 6 -> 0 -> 6 -> 5 -> 8
+"""
+
+
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
         slow = head
         fast = head
-        stack = deque()
 
         while True:
             slow = slow.next
@@ -20,16 +52,13 @@ class Solution:
                 fast = fast.next.next
             else:
                 break
-
-        while slow:
-            stack.append(slow.val)
-            slow = slow.next
+        reversed = reverse(slow)
 
         slow = head
-        while len(stack):
-            node = stack.pop()
-            if slow.val == node:
+        while reversed:
+            if slow.val == reversed.val:
                 slow = slow.next
+                reversed = reversed.next
             else:
                 return False
 
