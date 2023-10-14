@@ -1,16 +1,16 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        sums = set()
+        fast = n
+        slow = n
+        start = True
 
-        acc = 0
-        curr = n
-        while acc not in sums:
-            if acc != 0:
-                sums.add(acc)
-                curr = acc
-            acc = 0
-            for i in list(str(curr)):
-                acc += int(i) * int(i)
-            if acc == 1:
+        def calc(x):
+            return sum([int(i) ** 2 for i in str(x)])
+
+        while start or fast != slow:
+            start = False
+            slow = calc(slow)
+            fast = calc(calc(fast))
+            if fast == 1:
                 return True
         return False
