@@ -6,11 +6,13 @@ class Solution:
         slow = n
         fast = n
         while True:
-            slow = calc(slow)
-            fast = calc(calc(fast))
-            if fast == 1:
-                return True
-            if fast == 89:
-                return False
+            for i in range(2):
+                if i == 0:
+                    slow = calc(slow)
+                fast = calc(fast)
+                if fast == 1:
+                    return True
+                if fast == 89:
+                    return False
             if fast == slow:
                 return False
