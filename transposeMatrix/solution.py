@@ -3,8 +3,5 @@ class Solution:
         result = []
         m = len(matrix) # number of rows
         n = len(matrix[0]) # numbers of columns
-        result = [[0] * m for i in range(n)]
-        for j in range(n):
-            for i in range(m):
-                result[j][i]=matrix[i][j] 
+        result = [[matrix[i][j] for j in range(len(matrix[i]))] for i in range(len(matrix))]
         return result
