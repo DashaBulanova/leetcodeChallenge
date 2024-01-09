@@ -1,33 +1,7 @@
-import collections
-from typing import Optional
-
-from core.exceptions.constraints_violation import ConstraintsViolationException
+from collections import deque
 
 
-def from_array(arr: list[int]):
-    if not arr:
-        raise ConstraintsViolationException()
-
-    nodes = collections.deque()
-    root = None
-    for i in range(len(arr)):
-        current = TreeNode(arr[i]) if arr[i] else None
-
-        if i == 0:
-            root = current
-        elif i % 2 == 0:
-            node = nodes.popleft()
-            node.right = current
-        else:
-            node = nodes[0]
-            node.left = current
-
-        if current:
-            nodes.append(current)
-
-    return root
-
-
+# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -35,30 +9,36 @@ class TreeNode:
         self.right = right
 
 
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
 class Solution:
-    def maxAncestorDiff(self, root: Optional[TreeNode]) -> int:
-        return self.maxAncestorDiff(root, None, None)
+    def _define_leaf(self, node, acc):
+        if node is None:
+            return
 
-    def maxDifference(self, node, head, ancestor) -> int:
-        if not node:
-            return 0
+        if node.left is None and node.right is None:
+            acc.append(node.val)
+            return
 
-        diff = 0
-        if not ancestor:
-            diff = max(
-                abs(node.val - head.val),
-                abs(node.val - ancestor.val))
-        elif not head:
-            diff = max(
-                abs(node.val - head.val))
+        if node.left is not None:
+            self._define_leaf(node.left, acc)
+        if node.right is not None:
+            self._define_leaf(node.right, acc)
+        return
 
-        left_max = self.maxDifference(node.left, head=node, ancestor=head)
-        right_max = self.maxDifference(node.right, head=node, ancestor=head)
+    def leafSimilar(self, root1: TreeNode | None, root2: TreeNode | None) -> bool:
+        if root1 is None and root2 is None:
+            return True
+        if root1 is not None and root2 is None:
+            return False
+        if root1 is None and root2 is not None:
+            return False
 
-        return max(left_max, right_max, diff)
+        leaf_1: list = []
+        self._define_leaf(root1, leaf_1)
+
+        leaf_2: list = []
+        self._define_leaf(root2, leaf_2)
+
+        return leaf_1 == leaf_2
+
+
+
