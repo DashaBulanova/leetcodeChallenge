@@ -1,12 +1,11 @@
 import pytest
 from .solution import RandomizedSet
 
-
 def test():
-    rs = RandomizedSet()
-    print(rs.insert(53))
-    print(rs.insert(12))
-    print(rs.remove(53))
-    print(rs.insert(23))
-    print(rs.remove(12))
-    print(rs.getRandom())
+    sut = RandomizedSet()
+    sut.insert(1)
+    sut.remove(2)
+    sut.insert(2)
+    sut.getRandom()
+    sut.remove(1)
+    sut.insert(2)
