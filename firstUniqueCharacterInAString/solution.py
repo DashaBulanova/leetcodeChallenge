@@ -1,11 +1,14 @@
-
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        hashmap = {}
-        for c in s:
-            hashmap[c] = hashmap[c] + 1 if c in hashmap else 1
+        d = {}
 
         for i in range(len(s)):
-            if hashmap[s[i]] == 1:
-                return i
+            if s[i] in d:
+                d[s[i]] = (d[s[i]][0]+1, i)
+            else:
+                d[s[i]] = (1,i)
+
+        for k,v in d.items():
+            if v[0]==1:
+                return v[1]
         return -1
