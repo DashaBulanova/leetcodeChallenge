@@ -1,23 +1,41 @@
+# class OrderedSet:
 
+#     def __init__(order: str):
+#         self.dict = {}
+#         for c in order:
+#             self.dict[c] = self.dict.get(c,0)+1
+#         self.len = len(self.dict)
+
+#     def __iter__(self):
+#         self.dict.__iter__()
+        
+
+#     def __next__(self):
+#         if self.n <= self.len:
+#             self.dict
 
 
 class Solution:
-    def __init__(self):
-        self.global_i = 33
-        self.__order = {}
+    def customSortString(self, order: str, s: str) -> str:
+        d = {} # k:v => char = order index
+        for i in range(len(order)): #O(1)
+            d[order[i]] = i
 
-    def customSortString(self, order: str, sample: str) -> str:
-        i = 1
-        for c in order:
-            self.__order[c] = i
-            i = i + 1
+        outbox=27
+        result = {} #k:v => order_index: (char, frequency)
+        for i in range(len(s)): #O(m=len(s))
+            char = s[i]
+            if char in d: #O(1)
+                if d[char] in result:
+                    result[d[char]]=(char, result[d[char]][1]+1)
+                else:
+                    result[d[char]]=(char, 1)
+            else:
+                result[outbox]=(char,1)
+                outbox+=1
 
-        return "".join(x for x in sorted(list(sample), key=self.compare))
+        s = ""
+        for k in sorted(result.keys()):
+            s += result[k][0]*result[k][1]
 
-    global_i = 33
-    def compare(self, c):
-        if self.__order.__contains__(c):
-            return self.__order[c]
-        else:
-            self.global_i = self.global_i + 1
-            return self.global_i
+        return s
